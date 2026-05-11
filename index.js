@@ -1,0 +1,95 @@
+// this is for mongodb DNS error
+const dns = require("node:dns");
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
+
+const cors = require('cors')
+const express = require('express');
+const app = express()
+const dotenv = require('dotenv');
+dotenv.config();
+const PORT = process.env.PORT || 2000;
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const uri = process.env.MONGODB_URI;
+
+
+
+app.use(express.json());
+app.use(cors())
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+async function run() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+
+    const db = client.db('wanderlust');
+    const destinationCollection = db.collection('destinations');
+    app.post('/destination', async (req, res) => {
+      const destinationData = req.body;
+      console.log(destinationData)
+      const result = await destinationCollection.insertOne(destinationData)
+      res.json(result);
+    });
+
+
+    app.get('/destination',async(req,res)=>{
+      const result=await destinationCollection.find().toArray();
+      res.json(result)
+    })
+
+app.get('/destination/:id', async(req, res)=>{
+  const {id}=req.params;
+  const result=await destinationCollection.findOne({_id: new ObjectId(id)})
+  res.json(result)
+});
+
+app.patch('/destination/:id', async(req, res)=>{
+  const {id}=req.params
+  const updateData=req.body
+   console.log(updateData)
+  const result=await destinationCollection.updateOne(
+    {_id: new ObjectId(id)},
+    {$set: updateData}
+   
+  )
+  res.json(result)
+});
+
+app.delete('/destination/:id', async(req, res)=>{
+  const {id}=req.params;
+  const result=await destinationCollection.deleteOne({_id: new ObjectId(id)})
+  console.log(result)
+  res.json(result)
+})
+
+
+
+
+
+
+
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    // await client.close();
+  }
+}
+run().catch(console.dir);
+
+
+
+app.get('/', (req, res) => {
+  res.send('Hollo world')
+});
+
+
+app.listen(PORT, () => {
+  console.log(`App is listening on port ${PORT}`)
+})
