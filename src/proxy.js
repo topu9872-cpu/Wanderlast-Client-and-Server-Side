@@ -12,7 +12,6 @@ console.log(session)
       new URL("/signin", request.url)
     );
   }
-
   return NextResponse.next();
 }
 

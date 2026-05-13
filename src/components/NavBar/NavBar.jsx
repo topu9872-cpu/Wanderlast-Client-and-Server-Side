@@ -17,7 +17,6 @@ const handaleSignOut=async ()=>{
   router.push('/signin')
 }
 
-
   return (
     <div className="text-lg font-semibold">
       <div className="navbar bg-base-100 shadow-sm px-10">
