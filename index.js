@@ -29,6 +29,7 @@ async function run() {
 
     const db = client.db('wanderlust');
     const destinationCollection = db.collection('destinations');
+    const bookingCollection=db.collection('booking');
     app.post('/destination', async (req, res) => {
       const destinationData = req.body;
       console.log(destinationData)
@@ -37,37 +38,52 @@ async function run() {
     });
 
 
-    app.get('/destination',async(req,res)=>{
-      const result=await destinationCollection.find().toArray();
+
+
+    app.get('/destination', async (req, res) => {
+      const result = await destinationCollection.find().toArray();
       res.json(result)
     })
 
-app.get('/destination/:id', async(req, res)=>{
-  const {id}=req.params;
-  const result=await destinationCollection.findOne({_id: new ObjectId(id)})
+    app.get('/destination/:id', async (req, res) => {
+      const { id } = req.params;
+      const result = await destinationCollection.findOne({ _id: new ObjectId(id) })
+      res.json(result)
+    });
+
+    app.patch('/destination/:id', async (req, res) => {
+      const { id } = req.params
+      const updateData = req.body
+      console.log(updateData)
+      const result = await destinationCollection.updateOne(
+        { _id: new ObjectId(id) },
+        { $set: updateData }
+
+      )
+      res.json(result)
+    });
+
+    app.delete('/destination/:id', async (req, res) => {
+      const { id } = req.params;
+      const result = await destinationCollection.deleteOne({ _id: new ObjectId(id) })
+      console.log(result)
+      res.json(result)
+    });
+
+/**
+ * ! this is for Booking 
+ */
+app.post('/booking', async(req, res)=>{
+  const bookingData=req.body;
+  const result=await bookingCollection.insertOne(bookingData);
   res.json(result)
 });
 
-app.patch('/destination/:id', async(req, res)=>{
-  const {id}=req.params
-  const updateData=req.body
-   console.log(updateData)
-  const result=await destinationCollection.updateOne(
-    {_id: new ObjectId(id)},
-    {$set: updateData}
-   
-  )
-  res.json(result)
-});
-
-app.delete('/destination/:id', async(req, res)=>{
-  const {id}=req.params;
-  const result=await destinationCollection.deleteOne({_id: new ObjectId(id)})
-  console.log(result)
+app.get('/booking/:userId', async(req,res)=>{
+  const {userId}=req.params
+  const result=await bookingCollection.find({userId:userId}).toArray();
   res.json(result)
 })
-
-
 
 
 
