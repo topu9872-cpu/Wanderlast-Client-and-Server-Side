@@ -3,6 +3,7 @@ import "./globals.css";
 import NavBar from "@/components/NavBar/NavBar";
 import Footer from "@/components/Footer/Footer";
 import { ToastContainer } from "react-toastify";
+import { Toaster } from "react-hot-toast";
 
 const josefin = Josefin_Sans({
   subsets: ["latin"],
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
         <NavBar />
         {/* Wrap children in a main tag with flex-grow */}
         <main className="grow">
+          <Toaster/>
           <ToastContainer/>
           {children}
         </main>

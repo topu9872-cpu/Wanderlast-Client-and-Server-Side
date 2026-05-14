@@ -1,25 +1,50 @@
-import React from 'react';
-import styled from 'styled-components';
+import { auth } from "@/lib/auth";
 
-const ProfilePage = () => {
+import { headers } from "next/headers";
+import Image from "next/image";
+import React from "react";
+import styled from "styled-components";
+
+const ProfilePage = async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  const user = session?.user;
+  console.log(user);
   return (
     <StyledWrapper>
-        <div className='flex justify-center items-center my-20'>
-      <div className="card-client ">
-        <div className="user-picture">
-          <svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
-            <path d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z" />
-          </svg>
+      <div className="flex justify-center  items-center my-20">
+        <div className="card-client  ">
+          <div className="user-picture">
+            <Image
+              src={user.image || "/assets/icons8-avatar.gif"}
+              height={100}
+              width={100}
+              alt={user.name}
+            />
+          </div>
+
+          <p className="name-client">
+            {" "}
+            {user?.name}
+            <span>{user.email}</span>
+            <span>
+              {`User into date: ${
+                user?.updatedAt
+                  ? new Date(user.updatedAt).toLocaleDateString("en-US", {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    })
+                  : "Never"
+              }`}
+            </span>
+          </p>
         </div>
-        <p className="name-client"> Jhon Doe
-          <span>CEO of WritBook
-          </span>
-        </p>
-       </div>
       </div>
     </StyledWrapper>
   );
-}
+};
 
 const StyledWrapper = styled.div`
   .card-client {
@@ -135,6 +160,7 @@ const StyledWrapper = styled.div`
   .social-media a:hover .tooltip-social {
     opacity: 1;
     transform: translate(-50%, -130%);
-  }`;
+  }
+`;
 
 export default ProfilePage;
