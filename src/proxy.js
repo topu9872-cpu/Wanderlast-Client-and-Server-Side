@@ -16,5 +16,5 @@ console.log(session)
 }
 
 export const config = {
-  matcher: ["/profile", "/add-destination"],
+  matcher: ["/profile"],
 };
