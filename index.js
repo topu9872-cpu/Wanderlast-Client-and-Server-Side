@@ -85,6 +85,12 @@ app.get('/booking/:userId', async(req,res)=>{
   res.json(result)
 })
 
+ app.delete('/booking/:id', async (req, res) => {
+      const { id } = req.params;
+      const result = await bookingCollection.deleteOne({ _id: new ObjectId(id) })
+      console.log(result)
+      res.json(result)
+    });
 
 
 
