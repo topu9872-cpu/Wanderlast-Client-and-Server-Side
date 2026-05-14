@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import DestinationCards from '../../components/Destinationcards/DestinationCards';
 
 
@@ -15,7 +15,9 @@ console.log(destinations)
     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-10 gap-10'>
         {
             destinations.map(destination=><div key={destination._id}>
-                <DestinationCards destination={destination} />
+               <Suspense fallback={<p className='text-5xl text-cyan-500 mx-auto my-auto'>Loding........</p>}>
+                 <DestinationCards destination={destination} />
+               </Suspense>
             </div>
             )}
     </div>

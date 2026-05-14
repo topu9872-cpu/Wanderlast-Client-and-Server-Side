@@ -4,24 +4,15 @@ import React from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdArrowOutward, MdOutlineDateRange } from "react-icons/md";
 const DestinationCards = ({ destination }) => {
-  const {
-    category,
-    country,
-    departureDate,
-    description,
-    destinationName,
-    duration,
-    imageUrl,
-    price,
-    _id
-  } = destination;
+  const { category, country, departureDate, imageUrl, price, _id } =
+    destination;
 
   return (
     <div>
       <div className="card bg-white w-96 text-black shadow-sm">
         <figure>
           <Image
-            src={imageUrl || ''}
+            src={destination?.imageUrl || "/assets/destinations/image1.png"}
             height={260}
             width={400}
             alt="image"
@@ -48,7 +39,10 @@ const DestinationCards = ({ destination }) => {
               <MdOutlineDateRange />
               {departureDate}
             </div>
-            <Link href={`/destination/${_id}`} className="flex text-cyan-500 text-2xl font-bold items-center underline">
+            <Link
+              href={`/destination/${_id}`}
+              className="flex text-cyan-500 text-2xl font-bold items-center underline"
+            >
               Book Now <MdArrowOutward />
             </Link>
           </div>

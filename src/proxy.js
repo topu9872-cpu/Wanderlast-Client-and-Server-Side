@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "./lib/auth";
 import { headers } from "next/headers";
+import toast from "react-hot-toast";
 
 export async function proxy(request) {
   const session = await auth.api.getSession({
@@ -8,6 +9,7 @@ export async function proxy(request) {
   });
 console.log(session)
   if (!session) {
+    toast.error('you have to signup ❤️❤️❤️')
     return NextResponse.redirect(
       new URL("/signin", request.url)
     );
@@ -16,5 +18,5 @@ console.log(session)
 }
 
 export const config = {
-  matcher: ["/profile"],
+  matcher: ["/profile","//destination/:_id","/my-profile","/my-bookings"],
 };

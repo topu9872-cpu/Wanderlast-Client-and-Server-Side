@@ -56,7 +56,7 @@ const NavBar = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
               </svg>
             </div>
-            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 border border-gray-100">
+            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-1 p-2 shadow bg-base-100 rounded-box w-52 border border-gray-100">
               <NavLinks mobile />
             </ul>
           </div>
@@ -89,7 +89,7 @@ const NavBar = () => {
           {user && (
             <div className="hidden md:block text-right mr-2 leading-tight">
               <p className="text-[10px] uppercase text-gray-400">Welcome</p>
-              <p className="text-cyan-600 text-xs font-bold truncate max-w-[100px]">{user.name}</p>
+              <p className="text-cyan-600 text-xs font-bold truncate max-w-25">{user.name}</p>
             </div>
           )}
 
@@ -105,7 +105,7 @@ const NavBar = () => {
                 />
               </div>
             </div>
-            <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 border border-gray-100">
+            <ul tabIndex={0} className="mt-3 z-1 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 border border-gray-100">
               <li className="md:hidden px-4 py-2 font-bold text-cyan-600 border-b mb-1">
                 Hi, {user?.name || "Guest"}
               </li>
