@@ -17,7 +17,6 @@ const DestinationDetailsPage = async ({ params }) => {
     country,
     departureDate,
     description,
-
     imageUrl,
   } = destination;
 

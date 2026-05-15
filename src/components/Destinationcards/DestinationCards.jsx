@@ -12,12 +12,13 @@ const DestinationCards = ({ destination }) => {
       <div className="card bg-white w-96 text-black shadow-sm">
         <figure>
           <Image
-            src={destination?.imageUrl || "/assets/destinations/image1.png"}
+            src={imageUrl}
             height={260}
             width={400}
             alt="image"
             className="rounded-2xl"
           />
+        
         </figure>
         <div className="card-body">
           <h2 className="card-title">

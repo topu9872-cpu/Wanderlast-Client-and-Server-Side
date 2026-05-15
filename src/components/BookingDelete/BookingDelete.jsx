@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 
 const BookingDelete = ({ booking }) => {
-    console.log(booking._id)
+  
     const router = useRouter();
   const handleCancalBooking = async () => {
     const res = await fetch(`http://localhost:2000/booking/${booking._id}`, {

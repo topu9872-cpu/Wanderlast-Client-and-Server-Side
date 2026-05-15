@@ -18,7 +18,7 @@ const NavBar = () => {
   };
 
   // Nav Links Component to keep code DRY
-  const NavLinks = ({ mobile = false }) => (
+  const NavLinks = () => (
     <>
       <li>
         <Link href="/" className={isActive("/") ? "text-cyan-500 font-bold" : "text-gray-700"}>

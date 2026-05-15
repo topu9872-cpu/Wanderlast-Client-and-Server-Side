@@ -2,11 +2,12 @@
 import { authClient } from "@/lib/auth-client";
 import { Eye, EyeSlash } from "@gravity-ui/icons";
 import { Button, InputGroup, TextField } from "@heroui/react";
-import { redirect } from "next/navigation";
+
 import { useState } from "react";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 import { createAuthClient } from "better-auth/client";
+import { useRouter } from "next/navigation";
 const SignUpForm = () => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -17,7 +18,7 @@ const SignUpForm = () => {
       provider: "google",
     });
   };
-
+const router=useRouter()
   const handleSignUp = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -28,11 +29,15 @@ const SignUpForm = () => {
       email: user.email,
       password: user.password,
       image: user.image,
-      // router.push('/signin')
+     
     });
-    if (data) {
-      // redirect('/sigin')
-    }
+   if (data) {
+  toast.success("Account created successfully");
+
+  setTimeout(() => {
+    router.push("/signin");
+  }, 800);
+}
     if (error) {
       toast.error(error.message);
     }

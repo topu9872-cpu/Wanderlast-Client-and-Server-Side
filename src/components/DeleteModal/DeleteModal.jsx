@@ -22,7 +22,7 @@ const DeleteModal = ({ destination }) => {
     const deleteData = await res.json();
     if(deleteData){
         redirect('/destination'),
-        toast.error('packge remove successfully')
+        toast.error('packge is deleted successfully')
     }
 
   };
