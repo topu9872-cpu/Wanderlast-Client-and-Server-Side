@@ -1,33 +1,30 @@
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { Button, Card } from "@heroui/react";
+import { Eye, MapPin } from "lucide-react";
+import Image from "next/image";
+import { FaCalendarAlt } from "react-icons/fa";
+import Link from "next/link";
+import BookingDelete from "@/components/BookingDelete/BookingDelete";
+
 const MyBookings = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-
   const token = await auth.api.getToken({
-    headers: await headers(),
-  });
+    headers: await headers()
+  })
 
   const user = session?.user;
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVEL_URL}/booking/${user?.id}`,
-    {
-      cache: "no-store",
-      headers: {
-        authorization: `Bearer ${token?.token}`,
-      },
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVEL_URL}/booking/${user?.id}`, {
+    cache: "no-store",
+    headers: {
+      authorization: `Bearar ${token.token}`
     }
-  );
+  });
 
   const bookings = await res.json();
-
-  if (!bookings || bookings.length === 0) {
-    return (
-      <div className="flex justify-center card bg-gray-300 mx-auto text-center text-6xl items-center my-10">
-        <h1>No Bookings Found</h1>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen px-4 py-8 sm:px-6 lg:px-10 xl:px-20">
@@ -38,17 +35,17 @@ const MyBookings = async () => {
         </p>
       </div>
 
-      <div className="space-y-5">
+      <div className=" space-y-5 ">
         {bookings.map((booking) => (
           <Card
             key={booking._id}
-            className="overflow-hidden rounded-2xl border-4 border-gray-300 p-4 shadow-sm"
+            className="overflow-hidden rounded-2xl card border-4 border-gray-300 p-4 shadow-sm"
           >
             <div className="flex flex-col gap-5 md:flex-row">
               <div className="relative h-52 w-full overflow-hidden rounded-xl md:h-44 md:w-44">
                 <Image
                   src={booking?.destinationImage}
-                  alt="booking image"
+                  alt={"booking image"}
                   fill
                   className="object-cover"
                 />
@@ -70,31 +67,29 @@ const MyBookings = async () => {
                     <div className="flex items-center gap-2 text-cyan-500 opacity-80">
                       <FaCalendarAlt />
                       <span>
-                        {new Date(
-                          booking.departureDate
-                        ).toLocaleDateString("en-US", {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        })}
+                        {new Date(booking.departureDate).toLocaleDateString(
+                          "en-US",
+                          {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric",
+                          },
+                        )}
                       </span>
                     </div>
 
                     <div className="flex items-center gap-2 opacity-80">
                       <MapPin size={18} className="text-cyan-500" />
-                      <span className="text-cyan-500">
-                        {booking.destinationCountry}
-                      </span>
+                      <span className="text-cyan-500">{booking.destinationCountry}</span>
                     </div>
 
                     <h3 className="text-xl font-bold text-cyan-500">
                       ${booking.destinationPrice}
                     </h3>
                   </div>
-
                   <div className="flex flex-col gap-3 sm:flex-row">
                     <BookingDelete booking={booking} />
-
+                    
                     <Link href={`/destination/${booking.destinationId}`}>
                       <Button color="primary" className="font-medium">
                         <Eye size={18} />
