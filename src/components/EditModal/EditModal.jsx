@@ -25,7 +25,7 @@ export function EditForm({destination}) {
     const formData=new FormData(e.currentTarget);
     const destination=Object.fromEntries(formData.entries());
     console.log(destination);
-   const res=await fetch(`http://localhost:2000/destination/${_id}`,{
+   const res=await fetch(`${process.env.NEXT_PUBLIC_SERVEL_URL}/destination/${_id}`,{
       method:'PATCH',
       headers:{
         'content-type': 'application/json'

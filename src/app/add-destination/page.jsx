@@ -1,4 +1,5 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import {
   Button,
   FieldError,
@@ -13,15 +14,24 @@ import { redirect } from "next/navigation";
 import { toast } from "react-toastify";
 
 const AddDestinationPage = () => {
+
+
+
+
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
+
+    const {data:tokenData}= await authClient.token()
+
     const destination = Object.fromEntries(formData.entries());
     console.log(destination);
-    const res = await fetch("http://localhost:2000/destination", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVEL_URL}/destination`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
+        authorization:`Bearar ${tokenData?.token}`
+        
       },
       body: JSON.stringify(destination),
     });

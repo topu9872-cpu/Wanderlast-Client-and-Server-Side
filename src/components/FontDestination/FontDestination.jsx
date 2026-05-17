@@ -3,7 +3,7 @@ import DestinationCards from '../Destinationcards/DestinationCards';
 import { FaArrowRight } from 'react-icons/fa';
 import Link from 'next/link';
 const FontDestination = async() => {
-    const res=await fetch('http://localhost:2000/destination')
+    const res=await fetch(`${process.env.NEXT_PUBLIC_SERVEL_URL}/destination`)
 const destinations=await res.json()
   return (
     <div className='mx-10 space-y-7'>

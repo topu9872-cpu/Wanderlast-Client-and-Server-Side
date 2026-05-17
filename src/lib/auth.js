@@ -8,24 +8,27 @@ const db = client.db('wanderlust');
 
 export const auth = betterAuth({
     database: mongodbAdapter(db, {
-      
+
         client
     }),
     emailAndPassword: {
         enabled: true,
     },
     socialProviders: {
-        google: { 
-            clientId: process.env.GOOGLE_CLIENT_ID , 
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET , 
-        }, 
+        google: {
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        },
     },
-    session:{
-enabled:true,
-strategy:'jwt',
-// for 7 days
-maxAge:7 * 24 * 60 * 60 },
-plugins:[
-jwt()
-]
+   session : {
+    cookieCache: {
+      enabled: true,
+      strategy: "jwt",
+      //max 7days
+      maxAge: 7 * 24 * 60 * 60
+    }
+  },
+    plugins: [
+        jwt()
+    ]
 });

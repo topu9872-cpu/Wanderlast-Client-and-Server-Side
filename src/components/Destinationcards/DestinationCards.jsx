@@ -9,20 +9,20 @@ const DestinationCards = ({ destination }) => {
 
   return (
     <div>
-      <div className="card bg-white w-96 text-black shadow-sm">
+      <div className="card bg-white w-96 h-110 text-black shadow-sm">
         <figure>
           <Image
             src={imageUrl}
-            height={260}
+            height={400}
             width={400}
             alt="image"
-            className="rounded-2xl"
+        className="h-100 object-cover"
           />
         
         </figure>
         <div className="card-body">
           <h2 className="card-title">
-            {}
+        
             <div className="flex items-center font-normal">
               <FaLocationDot />
               {country}

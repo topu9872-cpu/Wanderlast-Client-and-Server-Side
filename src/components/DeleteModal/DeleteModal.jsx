@@ -13,7 +13,7 @@ const DeleteModal = ({ destination }) => {
   } = destination;
 
   const handleDelete = async () => {
-    const res = await fetch(`http://localhost:2000/destination/${_id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVEL_URL}/destination/${_id}`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json"

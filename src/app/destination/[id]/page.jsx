@@ -1,6 +1,8 @@
 import DeleteModal from "@/components/DeleteModal/DeleteModal";
 import DestinationDate from "@/components/DestinationDate/DestinationDate";
 import { EditForm } from "@/components/EditModal/EditModal";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -10,7 +12,14 @@ import { FaArrowLeft, FaLocationDot } from "react-icons/fa6";
 
 const DestinationDetailsPage = async ({ params }) => {
   const { id } = await params;
-  const res = await fetch(`http://localhost:2000/destination/${id}`);
+  const token=await auth.api.getToken({
+    headers:await headers()
+  })
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVEL_URL}/destination/${id}`,{
+    headers:{
+      authorization:`Bearer ${token.token}`
+    }
+  });
   const destination = await res.json();
   const {
     category,
@@ -41,7 +50,7 @@ const DestinationDetailsPage = async ({ params }) => {
         <div className="mx-auto flex justify-center rounded-t-xl overflow-hidden">
           <div className="relative w-full max-w-5xl h-63 sm:h-88 md:h-113 lg:h-125">
             <Image
-              src={imageUrl}
+              src={imageUrl || '/assets/CTA.png'}
               fill
               className="object-cover rounded-t-xl"
               alt={category || "Destination image"}

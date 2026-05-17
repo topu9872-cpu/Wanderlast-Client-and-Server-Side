@@ -11,15 +11,21 @@ const MyBookings = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
+  const token=await auth.api.getToken({
+    headers:await headers()
+  })
 
   const user = session?.user;
 
-  const res = await fetch(`http://localhost:2000/booking/${user?.id}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVEL_URL}/booking/${user?.id}`, {
     cache: "no-store",
+    headers:{
+      authorization:`Bearar ${token.token}`
+    }
   });
 
   const bookings = await res.json();
-console.log(bookings)
+
   return (
     <div className="min-h-screen px-4 py-8 sm:px-6 lg:px-10 xl:px-20">
       <div className="mb-10">

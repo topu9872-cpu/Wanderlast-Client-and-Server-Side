@@ -24,7 +24,7 @@ const handleBooking=async()=>{
         departureDate:new Date(date)
     }
 
-    const res=await fetch('http://localhost:2000/booking',{
+    const res=await fetch(`${process.env.NEXT_PUBLIC_SERVEL_URL}/booking`,{
         method:'POST',
         headers:{
             'content-type':'application/json'
