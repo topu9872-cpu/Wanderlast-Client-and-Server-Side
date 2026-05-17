@@ -104,7 +104,7 @@ async function run() {
     /**
      * ! this is for Booking 
      */
-    app.post('/booking',varifyToken, async (req, res) => {
+    app.post('/booking', async (req, res) => {
       const bookingData = req.body;
       const result = await bookingCollection.insertOne(bookingData);
       res.json(result)
@@ -116,7 +116,7 @@ async function run() {
       res.json(result)
     })
 
-    app.delete('/booking/:id',varifyToken, async (req, res) => {
+    app.delete('/booking/:id', async (req, res) => {
       const { id } = req.params;
       const result = await bookingCollection.deleteOne({ _id: new ObjectId(id) })
       res.json(result)
